@@ -1,6 +1,8 @@
 // Core data model for cohistory (DESIGN.md §3).
 // Hand-authored first; shaped so an optional Wikidata/CSV adapter can emit it later.
 
+import type { Category } from '../categories'
+
 /** Precision of a historical date — drives uncertainty rendering. */
 export type Precision = 'day' | 'month' | 'year' | 'decade' | 'century'
 
@@ -33,6 +35,8 @@ interface EventBase {
   title: string
   /** 0-100; drives level-of-detail visibility (Phase 2). */
   importance: number
+  /** Optional explicit category; otherwise inferred from the title. */
+  category?: Category
 }
 
 /** An instantaneous event (a battle, an election). */

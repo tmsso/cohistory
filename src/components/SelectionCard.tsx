@@ -1,5 +1,6 @@
 import { useTimelineStore } from '../store/timelineStore'
 import { formatHDate } from '../lib/time'
+import { CATEGORY_LABEL, categoryColor, resolveCategory } from '../categories'
 
 /** DOM overlay card for the currently-selected event (DESIGN.md §5). */
 export function SelectionCard() {
@@ -11,6 +12,7 @@ export function SelectionCard() {
   if (!ev) return null
 
   const lane = doc.lanes.find((l) => l.id === ev.laneId)
+  const category = resolveCategory(ev)
   const when =
     ev.kind === 'point'
       ? formatHDate(ev.date)
@@ -27,6 +29,13 @@ export function SelectionCard() {
           </div>
           <h2 className="mt-1 text-[15px] font-semibold leading-tight text-ink">{ev.title}</h2>
           <div className="mt-2 flex items-center gap-2 text-[11px] text-ink-faint">
+            <span className="inline-flex items-center gap-1.5 rounded-md bg-line px-1.5 py-0.5 font-medium text-ink-muted">
+              <span
+                className="h-2 w-2 rounded-full"
+                style={{ backgroundColor: categoryColor(category) }}
+              />
+              {CATEGORY_LABEL[category]}
+            </span>
             <span className="rounded-md bg-line px-1.5 py-0.5 font-medium text-ink-muted">
               {ev.kind}
             </span>

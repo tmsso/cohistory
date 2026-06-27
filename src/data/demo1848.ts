@@ -63,7 +63,7 @@ export const demo1848: Timeline = {
     },
     {
       id: 'ev_at_metternich', laneId: 'lane_habsburg', kind: 'point', importance: 76,
-      title: 'Metternich flees', date: { year: 1848, month: 3, day: 13 },
+      title: 'Metternich flees', category: 'politics', date: { year: 1848, month: 3, day: 13 },
     },
     {
       id: 'ev_at_hungary', laneId: 'lane_habsburg', kind: 'span', importance: 90,
@@ -80,7 +80,7 @@ export const demo1848: Timeline = {
       title: 'First War of Independence', start: { year: 1848, month: 3, day: 23 }, end: { year: 1849, month: 3, day: 24 },
     },
     {
-      id: 'ev_it_milan', laneId: 'lane_italy', kind: 'span', importance: 68,
+      id: 'ev_it_milan', laneId: 'lane_italy', kind: 'span', importance: 68, category: 'revolution',
       title: 'Five Days of Milan', start: { year: 1848, month: 3, day: 18 }, end: { year: 1848, month: 3, day: 22 },
     },
     {
@@ -94,7 +94,7 @@ export const demo1848: Timeline = {
       title: 'Great Famine', start: { year: 1845 }, end: { year: 1852 }, // span dates approximate
     },
     {
-      id: 'ev_gb_chartist', laneId: 'lane_britain', kind: 'point', importance: 70,
+      id: 'ev_gb_chartist', laneId: 'lane_britain', kind: 'point', importance: 70, category: 'politics',
       title: 'Chartist meeting, Kennington Common', date: { year: 1848, month: 4, day: 10 },
     },
     {

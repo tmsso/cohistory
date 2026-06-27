@@ -9,9 +9,12 @@ export function TimelineView() {
   const contentHeight = AXIS_HEIGHT + laneCount * LANE_HEIGHT
 
   return (
-    <div className="flex w-full" style={{ height: contentHeight }}>
+    <div className="flex w-full items-start">
       <LaneHeaders />
-      <div className="relative min-w-0 flex-1 overflow-hidden bg-surface">
+      <div
+        className="relative min-w-0 flex-1 overflow-hidden bg-surface"
+        style={{ height: contentHeight }}
+      >
         <TimelineCanvas />
       </div>
     </div>
