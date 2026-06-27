@@ -8,20 +8,19 @@ export function LaneHeaders() {
 
   return (
     <div
-      className="shrink-0 border-r border-slate-800 bg-slate-950"
+      className="shrink-0 border-r border-line bg-headercol"
       style={{ width: HEADER_WIDTH }}
     >
-      <div style={{ height: AXIS_HEIGHT }} className="border-b border-slate-800" />
+      <div style={{ height: AXIS_HEIGHT }} className="border-b border-line bg-panel" />
       {lanes.map((lane) => (
         <div
           key={lane.id}
+          data-testid="lane-header"
           style={{ height: LANE_HEIGHT }}
-          className="flex flex-col justify-center gap-0.5 border-b border-slate-800 px-2.5"
+          className="flex items-center gap-2 border-b border-line px-3"
         >
-          <span className="text-[10px] uppercase tracking-wider text-slate-500">
-            {lane.kind}
-          </span>
-          <span className="text-sm font-medium leading-tight text-slate-200">
+          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-event" />
+          <span className="line-clamp-2 text-[13px] font-semibold leading-[1.15] text-ink">
             {lane.title}
           </span>
         </div>

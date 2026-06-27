@@ -1,5 +1,23 @@
 @import 'tailwindcss';
 
+/* Design tokens — mirror of src/theme.ts (keep in sync). */
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --color-surface: #0b0f14;
+  --color-panel: #111722;
+  --color-headercol: #0d131c;
+  --color-line: #1c2632;
+  --color-line2: #2a3645;
+
+  --color-ink: #e6edf3;
+  --color-ink-muted: #93a1b0;
+  --color-ink-faint: #66727f;
+
+  --color-event: #4f90c6;
+  --color-accent: #e8b23a;
+}
+
 html,
 body,
 #root {
@@ -10,4 +28,8 @@ body {
   margin: 0;
   overscroll-behavior: none;
   -webkit-tap-highlight-color: transparent;
+  font-family: var(--font-sans);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-feature-settings: 'cv05' 1; /* single-storey lowercase a, subtle */
 }

@@ -11,7 +11,7 @@ export function TimelineView() {
   return (
     <div className="flex w-full" style={{ height: contentHeight }}>
       <LaneHeaders />
-      <div className="relative min-w-0 flex-1 overflow-hidden bg-slate-900">
+      <div className="relative min-w-0 flex-1 overflow-hidden bg-surface">
         <TimelineCanvas />
       </div>
     </div>

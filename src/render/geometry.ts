@@ -1,19 +1,30 @@
 import type { Lane, Timeline, TimelineEvent } from '../types/timeline'
-import { eventStartYear, eventEndYear } from '../lib/time'
+import { eventEndYear, eventStartYear } from '../lib/time'
 import { yearToX } from '../lib/scale'
+import { layout } from '../theme'
 
-// Shared layout constants — used by both the canvas and the DOM lane headers,
-// so the two columns stay row-aligned.
-export const AXIS_HEIGHT = 44
-export const LANE_HEIGHT = 64
-export const HEADER_WIDTH = 116
+// Layout constants come from the theme so DOM and canvas stay row-aligned.
+export const AXIS_HEIGHT = layout.axisHeight
+export const LANE_HEIGHT = layout.laneHeight
+export const HEADER_WIDTH = layout.headerWidth
 
-export const POINT_R = 6
-export const SPAN_H = 20
-const MIN_SPAN_W = 3
+const MIN_SPAN_W = 4
+
+export type Tier = 'high' | 'mid' | 'low'
+
+export function tierOf(importance: number): Tier {
+  if (importance >= 80) return 'high'
+  if (importance >= 62) return 'mid'
+  return 'low'
+}
+
+/** Span bar heights and point-marker radii per importance tier. */
+export const SPAN_H: Record<Tier, number> = { high: 22, mid: 18, low: 13 }
+export const POINT_R: Record<Tier, number> = { high: 5.5, mid: 4.5, low: 3.5 }
 
 export interface LaneRow {
   lane: Lane
+  index: number
   top: number
   height: number
   centerY: number
@@ -21,6 +32,7 @@ export interface LaneRow {
 
 export interface EventBox {
   event: TimelineEvent
+  tier: Tier
   x: number
   y: number
   w: number
@@ -35,7 +47,7 @@ export function sortedLanes(doc: Timeline): Lane[] {
 export function computeLaneRows(lanes: Lane[]): LaneRow[] {
   return lanes.map((lane, i) => {
     const top = AXIS_HEIGHT + i * LANE_HEIGHT
-    return { lane, top, height: LANE_HEIGHT, centerY: top + LANE_HEIGHT / 2 }
+    return { lane, index: i, top, height: LANE_HEIGHT, centerY: top + LANE_HEIGHT / 2 }
   })
 }
 
@@ -51,25 +63,22 @@ export function computeEventBoxes(
   for (const e of doc.events) {
     const row = rowByLane.get(e.laneId)
     if (!row) continue
+    const tier = tierOf(e.importance)
     if (e.kind === 'point') {
+      const r = POINT_R[tier]
       const cx = yearToX(eventStartYear(e), ppy, panX)
-      boxes.push({
-        event: e,
-        x: cx - POINT_R,
-        y: row.centerY - POINT_R,
-        w: POINT_R * 2,
-        h: POINT_R * 2,
-        centerY: row.centerY,
-      })
+      boxes.push({ event: e, tier, x: cx - r, y: row.centerY - r, w: r * 2, h: r * 2, centerY: row.centerY })
     } else {
+      const h = SPAN_H[tier]
       const x0 = yearToX(eventStartYear(e), ppy, panX)
       const x1 = yearToX(eventEndYear(e), ppy, panX)
       boxes.push({
         event: e,
+        tier,
         x: x0,
-        y: row.centerY - SPAN_H / 2,
+        y: row.centerY - h / 2,
         w: Math.max(MIN_SPAN_W, x1 - x0),
-        h: SPAN_H,
+        h,
         centerY: row.centerY,
       })
     }
